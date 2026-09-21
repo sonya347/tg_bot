@@ -1,3 +1,9 @@
+name: Run Telegram AI Bot
+
+on:
+  workflow_dispatch:   # запуск вручную из вкладки Actions
+  # push:              # можно раскомментировать, чтобы запускался при каждом пуше
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
