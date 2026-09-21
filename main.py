@@ -1,3 +1,4 @@
+import os
 import telebot
 from huggingface_hub import InferenceClient
 
