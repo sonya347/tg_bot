@@ -16,7 +16,7 @@ bot = telebot.TeleBot(TELEGRAM_TOKEN)
 # Инициализация клиента Hugging Face
 # Заменили модель на Mistral, так как Llama может требовать одобрения доступа
 client = InferenceClient(
-    model="mistralai/Mistral-7B-Instruct-v0.1",
+    model="microsoft/Phi-3.5-mini-instruct",
     token=HF_TOKEN
 )
 
