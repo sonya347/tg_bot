@@ -14,7 +14,7 @@ if not TELEGRAM_TOKEN or not HF_TOKEN:
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 # Инициализация клиента Hugging Face
-# Заменили модель на Mistral, так как Llama может требовать одобрения доступа
+# Используем модель Phi-3.5-mini — она работает на бесплатном Inference API
 client = InferenceClient(
     model="microsoft/Phi-3.5-mini-instruct",
     token=HF_TOKEN
@@ -27,10 +27,10 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     user_text = message.text
-    
+
     # Показываем пользователю, что бот "печатает"
     bot.send_chat_action(message.chat.id, 'typing')
-    
+
     try:
         # Отправляем запрос к ИИ
         response = client.chat.completions.create(
@@ -40,15 +40,15 @@ def echo_all(message):
             max_tokens=512,
             temperature=0.7
         )
-        
+
         # Извлекаем текст ответа
         ai_answer = response.choices[0].message.content
-        
+
         # Отправляем ответ в Telegram
         bot.reply_to(message, ai_answer)
-        
+
     except Exception as e:
-        # Логируем ошибку в консоль, чтобы видеть её на хостинге
+        # Логируем ошибку в консоль, чтобы видеть её в GitHub Actions
         print(f"Ошибка при запросе к ИИ: {e}")
         bot.reply_to(message, "Извини, произошла ошибка. Попробуй позже.")
 
